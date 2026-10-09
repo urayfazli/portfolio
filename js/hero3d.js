@@ -1,6 +1,6 @@
 /* ============================================================
    0xray portfolio — 3D hero background (Three.js starfield)
-   - THREE.Points starfield (~1000 desktop / ~450 mobile) with real
+   - THREE.Points starfield (~650 desktop / ~280 mobile) with real
      z-depth, vertex colors (white/gray + ~14% gold #FCD535).
    - Slow ambient rotation + desktop mouse parallax + scroll dolly.
    - Optional faint gold wireframe icosahedron, right-of-center.
@@ -38,7 +38,7 @@ import * as THREE from 'three';
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     for (var i = 0; i < 140; i++) {
       var gold = Math.random() < 0.14;
-      ctx.globalAlpha = 0.25 + Math.random() * 0.65;
+      ctx.globalAlpha = 0.15 + Math.random() * 0.45;
       ctx.fillStyle = gold ? '#FCD535' : (Math.random() < 0.5 ? '#eaecef' : '#929aa5');
       ctx.beginPath();
       ctx.arc(Math.random() * w, Math.random() * h, Math.random() * 1.4 + 0.3, 0, Math.PI * 2);
@@ -82,7 +82,7 @@ import * as THREE from 'three';
   camera.position.set(0, 0, BASE_Z);
 
   /* ---------- starfield points ---------- */
-  var COUNT = isMobile ? 450 : 1000;
+  var COUNT = isMobile ? 280 : 650;
   var positions = new Float32Array(COUNT * 3);
   var colors = new Float32Array(COUNT * 3);
   var gold = new THREE.Color('#FCD535');
@@ -106,11 +106,11 @@ import * as THREE from 'three';
   geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
   geo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
   var mat = new THREE.PointsMaterial({
-    size: 0.7,
+    size: 0.55,
     sizeAttenuation: true,
     vertexColors: true,
     transparent: true,
-    opacity: 1,
+    opacity: 0.6,
     blending: THREE.AdditiveBlending,
     depthWrite: false
   });
@@ -120,7 +120,7 @@ import * as THREE from 'three';
   /* ---------- faint wireframe accent ---------- */
   var wire = new THREE.LineSegments(
     new THREE.EdgesGeometry(new THREE.IcosahedronGeometry(16, 1)),
-    new THREE.LineBasicMaterial({ color: '#FCD535', transparent: true, opacity: 0.07 })
+    new THREE.LineBasicMaterial({ color: '#FCD535', transparent: true, opacity: 0.045 })
   );
   wire.position.set(22, 6, -8);
   scene.add(wire);
@@ -190,9 +190,9 @@ import * as THREE from 'three';
     rafId = window.requestAnimationFrame(tick);
 
     // Slow ambient rotation.
-    stars.rotation.y += 0.0004;
-    wire.rotation.y -= 0.0006;
-    wire.rotation.x += 0.0003;
+    stars.rotation.y += 0.0002;
+    wire.rotation.y -= 0.0003;
+    wire.rotation.x += 0.00015;
 
     // Scroll dolly, lerped (compute-only, no layout reads inside tick).
     var targetZ = BASE_Z + Math.min(scrollY, heroHeight) * 0.03;
