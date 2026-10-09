@@ -1,0 +1,144 @@
+/* ============================================================
+   0xray portfolio — 3D Bitcoin coin (pure CSS 3D)
+   - Two faces + 24-slice reeded edge for real thickness.
+   - Flip loop (rotateY) on .coin, bob on .coin-bob, synced glow/shadow.
+   - In-flow on mobile, floating at the hero side on >=1100px.
+   - Honors prefers-reduced-motion (static coin).
+   ============================================================ */
+.coin-stage {
+  --coin-d: clamp(104px, 17vw, 172px);
+  position: relative;
+  width: var(--coin-d);
+  margin: 48px auto 0;
+  z-index: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+.coin-glow {
+  position: absolute;
+  inset: -34%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(252, 213, 53, .32) 0%,
+    rgba(252, 213, 53, .10) 46%,
+    transparent 68%
+  );
+  filter: blur(4px);
+  animation: coin-glow 3.2s ease-in-out infinite;
+}
+
+.coin-bob {
+  animation: coin-bob 3.2s ease-in-out infinite;
+}
+
+.coin-scene {
+  width: var(--coin-d);
+  height: var(--coin-d);
+  perspective: 1000px;
+}
+
+.coin {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  animation: coin-flip 5.6s linear infinite;
+}
+
+/* faces */
+.coin-face {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  background: radial-gradient(
+    circle at 34% 28%,
+    #ffefa8 0%,
+    #fcd535 42%,
+    #e0a410 68%,
+    #9c6b04 100%
+  );
+  box-shadow:
+    inset 0 0 0 calc(var(--coin-d) * 0.045) rgba(122, 72, 0, .38),
+    inset 0 0 calc(var(--coin-d) * 0.22) rgba(90, 52, 0, .35);
+}
+.coin-face span {
+  font-family: var(--font-sans);
+  font-size: calc(var(--coin-d) * 0.52);
+  font-weight: 700;
+  line-height: 1;
+  color: #8a5c00;
+  text-shadow:
+    0 1px 0 rgba(255, 240, 180, .65),
+    0 -1px 1px rgba(90, 52, 0, .45);
+  transform: translateZ(1px);
+}
+.coin-front { transform: translateZ(calc(var(--coin-d) * 0.055)); }
+.coin-back  { transform: rotateY(180deg) translateZ(calc(var(--coin-d) * 0.055)); }
+
+/* reeded edge: 24 tangent slices forming the coin's thickness */
+.coin .es {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: calc(var(--coin-d) * 0.132);
+  margin-left: calc(var(--coin-d) * -0.066);
+  background: linear-gradient(180deg, #e3ac22 0%, #8a5c00 52%, #c08f12 100%);
+  transform: rotateY(var(--a)) translateZ(calc(var(--coin-d) / 2 - 0.5px));
+}
+
+/* ground shadow, pulsing in sync with the bob */
+.coin-shadow {
+  width: 62%;
+  height: 16px;
+  margin: 22px auto 0;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, .55), transparent 70%);
+  animation: coin-shadow 3.2s ease-in-out infinite;
+}
+
+@keyframes coin-flip {
+  from { transform: rotateY(0deg); }
+  to   { transform: rotateY(360deg); }
+}
+@keyframes coin-bob {
+  0%, 100% { transform: translateY(-9px); }
+  50%      { transform: translateY(9px); }
+}
+@keyframes coin-glow {
+  0%, 100% { opacity: .72; transform: scale(.96); }
+  50%      { opacity: 1;   transform: scale(1.05); }
+}
+@keyframes coin-shadow {
+  0%, 100% { opacity: .55; transform: scaleX(1.08); }
+  50%      { opacity: .32; transform: scaleX(.84); }
+}
+
+/* desktop: float at the hero side, clear of the centered text */
+@media (min-width: 1100px) {
+  .coin-stage {
+    position: absolute;
+    right: 5%;
+    top: 44%;
+    margin: 0;
+  }
+}
+
+/* reduced motion: static coin, no flip/bob/pulse */
+@media (prefers-reduced-motion: reduce) {
+  .coin,
+  .coin-bob,
+  .coin-glow,
+  .coin-shadow {
+    animation: none;
+  }
+  .coin { transform: rotateY(-24deg); }
+  .coin-glow { opacity: .8; }
+}

@@ -157,6 +157,23 @@ img { max-width: 100%; }
 }
 .nav-link:hover, .nav-link.active { color: var(--on-dark); background: var(--card); }
 .nav-cta { margin-left: 12px; }
+.nav-actions { display: flex; align-items: center; gap: 10px; }
+
+/* language toggle pill (EN | ID) — shadcn-style, always visible */
+.lang-toggle {
+  display: inline-flex; align-items: center; gap: 2px;
+  background: var(--card); border: 1px solid var(--hairline);
+  border-radius: var(--radius-pill); padding: 3px;
+}
+.lang-opt {
+  border: 0; background: transparent; color: var(--muted-strong);
+  font-family: var(--font-sans); font-size: 12px; font-weight: 700; letter-spacing: .5px;
+  padding: 7px 12px; border-radius: var(--radius-pill); cursor: pointer;
+  transition: background-color .15s ease, color .15s ease;
+}
+.lang-opt:hover { color: var(--on-dark); }
+.lang-opt.is-active { background: var(--primary); color: var(--on-primary); }
+.lang-opt.is-active:hover { color: var(--on-primary); }
 .nav-toggle {
   display: none; flex-direction: column; gap: 5px;
   background: none; border: 1px solid var(--hairline); border-radius: var(--radius-md);
