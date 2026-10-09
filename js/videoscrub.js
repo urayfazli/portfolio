@@ -24,6 +24,14 @@
   // reduced motion: leave the first frame as a static backdrop
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
+  // once the video actually plays, stop the 3D starfield behind it
+  // so it doesn't shimmer through the semi-transparent video
+  v.addEventListener('playing', function () {
+    if (typeof window.__stopHero3d === 'function') {
+      try { window.__stopHero3d(); } catch (e) {}
+    }
+  });
+
   v.loop = true;
   v.muted = true; // required for autoplay on mobile
   var p = v.play();

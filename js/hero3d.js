@@ -19,6 +19,18 @@ import * as THREE from 'three';
   var container = document.getElementById('hero3d');
   if (!container) return;
 
+  /* External stop hook: the video background calls window.__stopHero3d()
+     once it starts playing, so the animated starfield doesn't shimmer
+     through the semi-transparent video. Safe to call on any code path. */
+  var hero3dStopped = false;
+  window.__stopHero3d = function () {
+    hero3dStopped = true;
+    try { if (rafId) window.cancelAnimationFrame(rafId); } catch (e) {}
+    try { rafId = null; } catch (e) {}
+    var c = document.getElementById('hero3d');
+    if (c) c.style.display = 'none';
+  };
+
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ---------- 2D fallback (static starfield, no animation) ---------- */
@@ -158,7 +170,7 @@ import * as THREE from 'three';
     if (home) {
       new IntersectionObserver(function (entries) {
         var vis = entries[0].isIntersecting;
-        if (vis && !visible) {
+        if (vis && !visible && !hero3dStopped) {
           visible = true;
           rafId = window.requestAnimationFrame(tick);
         } else if (!vis && visible) {
@@ -186,7 +198,7 @@ import * as THREE from 'three';
 
   /* ---------- render loop ---------- */
   function tick() {
-    if (!visible) return;
+    if (!visible || hero3dStopped) return;
     rafId = window.requestAnimationFrame(tick);
 
     // Slow ambient rotation.
