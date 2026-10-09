@@ -12,6 +12,7 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
   <link rel="stylesheet" href="css/styles.css" />
+  <script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js"}}</script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -29,6 +30,8 @@
       <div class="nav-links" id="navLinks">
         <a class="nav-link" href="#about">About</a>
         <a class="nav-link" href="#nodes">Nodes</a>
+        <a class="nav-link" href="#stack">Skills</a>
+        <a class="nav-link" href="#journey">Journey</a>
         <a class="nav-link" href="#activities">Activities</a>
         <a class="nav-link" href="#projects">Projects</a>
         <a class="nav-link" href="#contact">Contact</a>
@@ -40,9 +43,7 @@
   <main id="main">
     <!-- ============ HERO ============ -->
     <header class="hero" id="home">
-      <div class="parallax-layer" data-speed="0.12" aria-hidden="true">
-        <canvas id="stars"></canvas>
-      </div>
+      <div class="hero-3d" id="hero3d" aria-hidden="true"></div>
       <div class="parallax-layer" data-speed="0.28" aria-hidden="true">
         <div class="hero-grid"></div>
       </div>
@@ -88,6 +89,24 @@
       </a>
     </header>
 
+    <!-- ============ STATS BAR ============ -->
+    <section class="stats-bar" id="stats">
+      <div class="container stats-grid">
+        <div class="stat reveal">
+          <span class="stat-num" data-count="3">0</span>
+          <p class="stat-label">Networks Secured</p>
+        </div>
+        <div class="stat reveal">
+          <span class="stat-num" data-count="24" data-suffix="/7">0</span>
+          <p class="stat-label">Node Monitoring</p>
+        </div>
+        <div class="stat reveal">
+          <span class="stat-num" data-count="6">0</span>
+          <p class="stat-label">Public Repositories</p>
+        </div>
+      </div>
+    </section>
+
     <!-- ============ ABOUT ============ -->
     <section class="section" id="about">
       <div class="container">
@@ -102,14 +121,25 @@
             Beyond infrastructure, I'm deep in the web3 trenches: hunting airdrops,
             stress-testing testnets, and collecting NFTs.
           </p>
-          <div class="about-card card reveal">
-            <h3 class="card-title">What I do</h3>
-            <ul class="check-list">
-              <li>Run validator &amp; node infrastructure across multiple networks</li>
-              <li>Participate early in testnets — run nodes, report bugs, give feedback</li>
-              <li>Track emerging protocols for airdrop opportunities, systematically</li>
-              <li>Collect NFTs with lasting communities and culture</li>
-            </ul>
+          <div class="about-side">
+            <div class="about-card card reveal">
+              <h3 class="card-title">What I do</h3>
+              <ul class="check-list">
+                <li>Run validator &amp; node infrastructure across multiple networks</li>
+                <li>Participate early in testnets — run nodes, report bugs, give feedback</li>
+                <li>Track emerging protocols for airdrop opportunities, systematically</li>
+                <li>Collect NFTs with lasting communities and culture</li>
+              </ul>
+            </div>
+            <div class="about-card card reveal">
+              <h3 class="card-title">Background</h3>
+              <ul class="check-list">
+                <li>Operating validator infrastructure that helps secure networks</li>
+                <li>Linux server administration and hardening</li>
+                <li>Testnet participation and protocol feedback</li>
+                <li>On-chain research and airdrop tracking</li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -134,9 +164,13 @@
             </div>
             <h3 class="card-title">Aptos Network</h3>
             <p class="card-text">Operating validator infrastructure on Aptos — a high-throughput Layer&nbsp;1 built for mass adoption.</p>
+            <p class="node-focus"><span class="focus-label">Operational focus:</span> uptime &amp; reliability, monitoring, network upgrades.</p>
             <div class="tag-row">
               <span class="tag">Layer 1</span>
               <span class="tag">BFT Consensus</span>
+              <span class="tag">Uptime &amp; reliability</span>
+              <span class="tag">Monitoring</span>
+              <span class="tag">Network upgrades</span>
             </div>
           </article>
           <article class="card reveal">
@@ -146,9 +180,13 @@
             </div>
             <h3 class="card-title">Sei Network</h3>
             <p class="card-text">Running validator infrastructure on Sei — the parallelized Layer&nbsp;1 purpose-built for high-performance trading apps.</p>
+            <p class="node-focus"><span class="focus-label">Operational focus:</span> performance tuning, monitoring, governance participation.</p>
             <div class="tag-row">
               <span class="tag">Layer 1</span>
               <span class="tag">Parallelized</span>
+              <span class="tag">Performance tuning</span>
+              <span class="tag">Monitoring</span>
+              <span class="tag">Governance participation</span>
             </div>
           </article>
           <article class="card reveal">
@@ -158,11 +196,94 @@
             </div>
             <h3 class="card-title">SubQuery Network</h3>
             <p class="card-text">Operating indexing infrastructure on SubQuery — powering fast, reliable data for web3 applications.</p>
+            <p class="node-focus"><span class="focus-label">Operational focus:</span> indexing performance, data reliability, query optimization.</p>
             <div class="tag-row">
               <span class="tag">Indexing</span>
               <span class="tag">Data Infra</span>
+              <span class="tag">Indexing performance</span>
+              <span class="tag">Data reliability</span>
+              <span class="tag">Query optimization</span>
             </div>
           </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TECH STACK ============ -->
+    <section class="section" id="stack">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="eyebrow">Tech Stack</p>
+          <h2 class="section-title">Skills that keep<br />nodes running.</h2>
+          <p class="section-desc">The operational toolkit behind reliable validator infrastructure.</p>
+        </div>
+        <div class="stack-grid">
+          <article class="card reveal">
+            <div class="activity-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="7" rx="2"/><rect x="2" y="14" width="20" height="7" rx="2"/><path d="M6 6.5h.01M6 17.5h.01"/></svg>
+            </div>
+            <h3 class="card-title">Validator Operations</h3>
+            <p class="card-text">Running and maintaining validator nodes that help secure blockchain networks.</p>
+          </article>
+          <article class="card reveal">
+            <div class="activity-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m4 17 6-6-6-6M12 19h8"/></svg>
+            </div>
+            <h3 class="card-title">Linux Server Administration</h3>
+            <p class="card-text">Hardened, production-grade Linux server setup, configuration, and maintenance.</p>
+          </article>
+          <article class="card reveal">
+            <div class="activity-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="m3.3 7 8.7 5 8.7-5M12 22V12"/></svg>
+            </div>
+            <h3 class="card-title">Docker &amp; Containerization</h3>
+            <p class="card-text">Isolated, reproducible node deployments with containers and compose workflows.</p>
+          </article>
+          <article class="card reveal">
+            <div class="activity-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 14 4-4 4 4 4-6"/></svg>
+            </div>
+            <h3 class="card-title">Monitoring &amp; Alerting</h3>
+            <p class="card-text">Around-the-clock health checks and alerts to catch issues before they escalate.</p>
+          </article>
+          <article class="card reveal">
+            <div class="activity-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v6L4.5 18a2 2 0 0 0 1.8 3h11.4a2 2 0 0 0 1.8-3L14 8V2"/><path d="M8.5 2h7"/><path d="M7 16h10"/></svg>
+            </div>
+            <h3 class="card-title">Testnet Participation</h3>
+            <p class="card-text">Early-network testing, bug reports, and feedback that improve mainnet launches.</p>
+          </article>
+          <article class="card reveal">
+            <div class="activity-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18M3 12h18"/></svg>
+            </div>
+            <h3 class="card-title">On-chain Research</h3>
+            <p class="card-text">Reading on-chain data to surface trends, opportunities, and project signals.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ JOURNEY ============ -->
+    <section class="section" id="journey">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="eyebrow">Journey</p>
+          <h2 class="section-title">Where I am,<br />where I'm headed.</h2>
+        </div>
+        <div class="timeline">
+          <div class="timeline-item reveal">
+            <h3 class="card-title">Running validator infrastructure</h3>
+            <p class="card-text">Operating nodes that help secure networks — uptime, upgrades, and reliability first.</p>
+          </div>
+          <div class="timeline-item reveal">
+            <h3 class="card-title">Expanding across networks</h3>
+            <p class="card-text">Aptos, Sei, and SubQuery — multi-network operations built on shared tooling and discipline.</p>
+          </div>
+          <div class="timeline-item reveal">
+            <h3 class="card-title">Deep in the ecosystem</h3>
+            <p class="card-text">Testnets, airdrop research, and NFT collecting — staying close to where web3 is moving.</p>
+          </div>
         </div>
       </div>
     </section>
@@ -181,21 +302,21 @@
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
             </div>
             <h3 class="card-title">Airdrop Hunter</h3>
-            <p class="card-text">Tracking emerging protocols, completing quests, and positioning early — systematically, not randomly.</p>
+            <p class="card-text">Tracking emerging protocols, completing quests, and positioning early — systematically, not randomly. On-chain activity across networks, documented and repeatable.</p>
           </article>
           <article class="card reveal">
             <div class="activity-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4L14 13l-3-3 3.7-3.7z"/></svg>
             </div>
             <h3 class="card-title">Testnet Participant</h3>
-            <p class="card-text">Stress-testing networks before mainnet — running nodes, reporting bugs, and giving feedback that ships.</p>
+            <p class="card-text">Stress-testing networks before mainnet — running nodes, reporting bugs, and giving feedback that ships. Early by design, thorough by habit.</p>
           </article>
           <article class="card reveal">
             <div class="activity-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21"/></svg>
             </div>
             <h3 class="card-title">NFT Collector</h3>
-            <p class="card-text">Collecting digital culture — from profile pictures to on-chain art backed by lasting communities.</p>
+            <p class="card-text">Collecting digital culture — from profile pictures to on-chain art backed by lasting communities. Curating for conviction, not hype.</p>
           </article>
         </div>
       </div>
@@ -213,17 +334,50 @@
           <p class="section-desc">Tools and bots for the web3 trenches — on-chain trackers, Telegram bots, and testnet tooling.</p>
         </div>
         <div class="cards-3">
-          <article class="card reveal">
-            <h3 class="card-title">On-Chain Trackers</h3>
-            <p class="card-text">Monitoring wallets, tokens, and network activity across chains — signal over noise.</p>
+          <article class="card repo-card reveal">
+            <div class="card-top">
+              <span class="coin-icon" aria-hidden="true">T</span>
+              <span class="badge-role">Tooling</span>
+            </div>
+            <h3 class="card-title">Testnet-track</h3>
+            <p class="card-text">Tools for tracking testnet participation — stays organized across networks and tasks.</p>
+            <div class="tag-row">
+              <span class="tag">Testnet</span>
+              <span class="tag">Tracking</span>
+            </div>
+            <div class="repo-link-row">
+              <a class="btn btn-secondary btn-sm" href="https://github.com/urayfazli/Testnet-track" target="_blank" rel="noopener">View repo &rarr;</a>
+            </div>
           </article>
-          <article class="card reveal">
-            <h3 class="card-title">Telegram Bots</h3>
-            <p class="card-text">Alerting and automation bots that bring on-chain events straight to your pocket.</p>
+          <article class="card repo-card reveal">
+            <div class="card-top">
+              <span class="coin-icon" aria-hidden="true">S</span>
+              <span class="badge-role">Experiments</span>
+            </div>
+            <h3 class="card-title">Soltracker</h3>
+            <p class="card-text">Solana on-chain tracking experiments — monitoring wallets and token activity.</p>
+            <div class="tag-row">
+              <span class="tag">Solana</span>
+              <span class="tag">On-chain</span>
+            </div>
+            <div class="repo-link-row">
+              <a class="btn btn-secondary btn-sm" href="https://github.com/urayfazli/Soltracker" target="_blank" rel="noopener">View repo &rarr;</a>
+            </div>
           </article>
-          <article class="card reveal">
-            <h3 class="card-title">Testnet Tooling</h3>
-            <p class="card-text">Scripts and helpers for participating in testnets efficiently and at scale.</p>
+          <article class="card repo-card reveal">
+            <div class="card-top">
+              <span class="coin-icon" aria-hidden="true">U</span>
+              <span class="badge-role">Monitoring</span>
+            </div>
+            <h3 class="card-title">Uray-radar</h3>
+            <p class="card-text">Web3 signal radar &amp; monitoring — keeping watch on what moves in the space.</p>
+            <div class="tag-row">
+              <span class="tag">Radar</span>
+              <span class="tag">Monitoring</span>
+            </div>
+            <div class="repo-link-row">
+              <a class="btn btn-secondary btn-sm" href="https://github.com/urayfazli/Uray-radar" target="_blank" rel="noopener">View repo &rarr;</a>
+            </div>
           </article>
         </div>
         <div class="cta-band reveal">
@@ -287,5 +441,6 @@
   </footer>
 
   <script src="js/app.js" defer></script>
+  <script type="module" src="js/hero3d.js"></script>
 </body>
 </html>
