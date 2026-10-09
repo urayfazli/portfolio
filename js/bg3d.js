@@ -129,6 +129,103 @@ import * as THREE from 'three';
   wire.position.set(24, 8, -10);
   scene.add(wire);
 
+  /* ---------- lights for the 3D objects ---------- */
+  scene.add(new THREE.AmbientLight(0xffffff, 0.55));
+  var dirLight = new THREE.DirectionalLight(0xffffff, 1.0);
+  dirLight.position.set(30, 40, 50);
+  scene.add(dirLight);
+
+  /* ---------- planets: one per section ---------- */
+  var planets = scenes.map(function (s, i) {
+    var g = new THREE.Group();
+    var r = 2.4 + (i % 3) * 0.5;
+    var mat = new THREE.MeshStandardMaterial({
+      color: s.accent.clone(), roughness: 0.65, metalness: 0.15,
+      transparent: true, opacity: 1
+    });
+    var mesh = new THREE.Mesh(new THREE.SphereGeometry(r, 40, 40), mat);
+    g.add(mesh);
+    var ring = null;
+    if (i % 3 === 1) {
+      ring = new THREE.Mesh(
+        new THREE.RingGeometry(r * 1.45, r * 2.15, 48),
+        new THREE.MeshBasicMaterial({
+          color: s.accent.clone(), transparent: true, opacity: 0.3,
+          side: THREE.DoubleSide
+        })
+      );
+      ring.rotation.x = -Math.PI / 2 + 0.4;
+      g.add(ring);
+    }
+    g.position.set((i % 2 === 0 ? -1 : 1) * 13, 5 - i * 1.1, -18);
+    g.scale.setScalar(0.25);
+    scene.add(g);
+    return { group: g, mesh: mesh, ring: ring, mat: mat, r: r };
+  });
+
+  /* ---------- rocket (built pointing +Z, travels between planets) ---------- */
+  var rocket = new THREE.Group();
+  (function buildRocket() {
+    var white = new THREE.MeshStandardMaterial({ color: '#f2f4f6', roughness: 0.4, metalness: 0.3 });
+    var goldM = new THREE.MeshStandardMaterial({ color: '#FCD535', roughness: 0.35, metalness: 0.5 });
+    var red = new THREE.MeshStandardMaterial({ color: '#e5484d', roughness: 0.5, metalness: 0.2 });
+    var blue = new THREE.MeshStandardMaterial({ color: '#4cc3ff', roughness: 0.2, metalness: 0.6 });
+    var body = new THREE.Mesh(new THREE.CylinderGeometry(0.32, 0.32, 1.7, 20), white);
+    body.geometry.rotateX(Math.PI / 2);
+    rocket.add(body);
+    var nose = new THREE.Mesh(new THREE.ConeGeometry(0.32, 0.75, 20), goldM);
+    nose.geometry.rotateX(Math.PI / 2);
+    nose.position.z = 1.22;
+    rocket.add(nose);
+    var win = new THREE.Mesh(new THREE.SphereGeometry(0.13, 16, 16), blue);
+    win.position.set(0, 0.3, 0.35);
+    rocket.add(win);
+    for (var f = 0; f < 3; f++) {
+      var fin = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.55, 0.65), f === 0 ? goldM : red);
+      var a = (f / 3) * Math.PI * 2;
+      fin.position.set(Math.cos(a) * 0.38, Math.sin(a) * 0.38, -0.62);
+      fin.rotation.z = a;
+      rocket.add(fin);
+    }
+  })();
+  var flameMat = new THREE.MeshBasicMaterial({
+    color: '#ff9a3c', transparent: true, opacity: 0.9,
+    blending: THREE.AdditiveBlending, depthWrite: false
+  });
+  var flame = new THREE.Mesh(new THREE.ConeGeometry(0.22, 1.0, 16), flameMat);
+  flame.geometry.rotateX(-Math.PI / 2); // point -Z (behind the rocket)
+  flame.position.z = -1.35;
+  rocket.add(flame);
+  var flameCore = new THREE.Mesh(
+    new THREE.ConeGeometry(0.11, 0.6, 12),
+    new THREE.MeshBasicMaterial({ color: '#ffe28a', transparent: true, opacity: 0.95, blending: THREE.AdditiveBlending, depthWrite: false })
+  );
+  flameCore.geometry.rotateX(-Math.PI / 2);
+  flameCore.position.z = -1.15;
+  rocket.add(flameCore);
+  rocket.position.set(-9, 7, -14);
+  scene.add(rocket);
+  var rocketBase = rocket.position.clone();
+  var rocketTarget = rocketBase.clone();
+
+  /* ---------- scroll gestures: idle + "2x scroll" boost ---------- */
+  var lastScrollEv = 0;
+  var gestureCount = 0;
+  var gestureQuiet = 0;
+  var boostT = -1; // -1 = no boost, 0..1 = boost in progress
+  window.addEventListener('scroll', function () {
+    var now = performance.now();
+    lastScrollEv = now;
+    if (now - gestureQuiet > 800) {
+      gestureCount++;
+      if (gestureCount >= 2) {
+        gestureCount = 0;
+        boostT = 0; // rocket boost!
+      }
+    }
+    gestureQuiet = now;
+  }, { passive: true });
+
   /* ---------- mouse parallax (desktop, fine pointer) ---------- */
   var finePointer = window.matchMedia('(pointer: fine)').matches;
   var mouseX = 0, mouseY = 0;
@@ -168,6 +265,8 @@ import * as THREE from 'three';
   function tick() {
     if (!running) return;
     rafId = window.requestAnimationFrame(tick);
+    var nowT = performance.now();
+    var timeS = nowT / 1000;
 
     // pick active scene: last section whose top passed 35% of viewport
     var probe = (window.scrollY || 0) + window.innerHeight * 0.35;
@@ -175,8 +274,12 @@ import * as THREE from 'three';
     for (var i = 0; i < scenes.length; i++) {
       if (scenes[i].top <= probe) idx = i;
     }
-    if (idx !== activeIdx) activeIdx = idx;
+    var sectionChanged = idx !== activeIdx;
+    if (sectionChanged) activeIdx = idx;
     var s = scenes[activeIdx];
+
+    // idle = no scroll for ~1.6s
+    var idle = (nowT - lastScrollEv) > 1600;
 
     // ease toward the active scene's look
     cur.accent.lerp(s.accent, 0.05);
@@ -187,6 +290,60 @@ import * as THREE from 'three';
     stars.rotation.y += cur.rot;
     wire.rotation.y -= cur.rot * 1.4;
     wire.rotation.x += cur.rot * 0.6;
+
+    /* ----- planets: spin, bob when idle, active one grows ----- */
+    for (var p = 0; p < planets.length; p++) {
+      var pl = planets[p];
+      var isActive = p === activeIdx;
+      pl.mesh.rotation.y += idle ? 0.006 : 0.0015;
+      if (pl.ring) pl.ring.rotation.z += idle ? 0.002 : 0.0006;
+      var targetScale = isActive ? 1 : 0.22;
+      var cs = pl.group.scale.x + (targetScale - pl.group.scale.x) * 0.06;
+      pl.group.scale.setScalar(cs);
+      var targetOp = isActive ? 1 : 0.3;
+      pl.mat.opacity += (targetOp - pl.mat.opacity) * 0.06;
+      if (pl.ring) pl.ring.material.opacity = pl.mat.opacity * 0.3;
+      // gentle bob when idle
+      pl.group.position.y += (((5 - p * 1.1) + (idle ? Math.sin(timeS * 1.4 + p) * 0.5 : 0)) - pl.group.position.y) * 0.06;
+    }
+
+    /* ----- rocket: flies to the active planet ----- */
+    var ap = planets[activeIdx];
+    rocketTarget.set(ap.group.position.x + 4.2, ap.group.position.y + 2.6, ap.group.position.z + 3);
+    var spd = sectionChanged ? 0.09 : 0.045;
+    rocketBase.x += (rocketTarget.x - rocketBase.x) * spd;
+    rocketBase.y += (rocketTarget.y - rocketBase.y) * spd;
+    rocketBase.z += (rocketTarget.z - rocketBase.z) * spd;
+
+    // boost orbit on 2nd scroll gesture
+    var orbitX = 0, orbitY = 0, orbitZ = 0, flare = 0;
+    if (boostT >= 0) {
+      boostT += 0.022;
+      if (boostT >= 1) { boostT = -1; }
+      else {
+        var ba = boostT * Math.PI * 2;
+        orbitX = Math.cos(ba) * 5;
+        orbitY = Math.sin(ba * 1.5) * 2.2;
+        orbitZ = Math.sin(ba) * 1.5;
+        flare = Math.sin(boostT * Math.PI);
+      }
+    }
+
+    var hoverY = idle ? Math.sin(timeS * 2.1) * 0.45 : 0;
+    rocket.position.set(
+      rocketBase.x + orbitX,
+      rocketBase.y + hoverY + orbitY,
+      rocketBase.z + orbitZ
+    );
+    rocket.lookAt(ap.group.position.x, ap.group.position.y, ap.group.position.z);
+
+    // flame: idle flicker, bigger while scrolling, huge on boost
+    var flameLen = idle ? 0.75 : 1.25;
+    flameLen *= (0.85 + 0.3 * Math.abs(Math.sin(timeS * 24)));
+    flameLen *= (1 + flare * 2.6);
+    flame.scale.set(1 + flare * 0.8, 1 + flare * 0.8, flameLen);
+    flameCore.scale.set(1 + flare * 0.5, 1 + flare * 0.5, flameLen * 0.85);
+    flameMat.opacity = 0.65 + flare * 0.35;
 
     // scroll travel + mouse, all lerped
     var scrollY = window.scrollY || 0;
