@@ -28,10 +28,7 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; scroll-snap-type: y proximity; }
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-snap-type: none; }
-}
+html { scroll-behavior: smooth; }
 
 /* ---------- global scroll-reactive 3D background ---------- */
 .bg3d, .bg-tint {
@@ -196,7 +193,6 @@ img { max-width: 100%; }
 /* ---------- hero + parallax ---------- */
 .hero {
   position: relative; min-height: 100svh; z-index: 1;
-  scroll-snap-align: start;
   display: flex; align-items: center; justify-content: center;
   overflow: hidden; padding: calc(var(--nav-h) + 48px) 0 80px;
 }
@@ -517,7 +513,29 @@ section[id], header[id] { scroll-margin-top: 84px; }
 /* ============================================================
    Editorial numbered chapters — manifesto restyle
    ============================================================ */
-.chapter { padding: clamp(72px, 10vw, 120px) 0; position: relative; z-index: 1; overflow: hidden; min-height: 100svh; scroll-snap-align: start; }
+.chapter { padding: clamp(72px, 10vw, 120px) 0; position: relative; z-index: 1; overflow: hidden; min-height: 100svh; }
+
+/* ---------- scroll scene progress indicator ---------- */
+.scene-progress {
+  position: fixed; left: 20px; bottom: 18px; z-index: 90;
+  display: flex; flex-direction: column; gap: 8px;
+  pointer-events: none;
+}
+.scene-progress-label {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--muted-strong);
+}
+.scene-progress-track {
+  display: block; width: 120px; height: 2px;
+  background: rgba(255, 255, 255, .12); border-radius: 2px;
+  overflow: hidden;
+}
+.scene-progress-fill {
+  display: block; width: 100%; height: 100%;
+  background: #FCD535; border-radius: 2px;
+  transform: scaleX(0); transform-origin: left center;
+}
 .chapter-meta { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; margin-bottom: 28px; }
 /* giant outlined numeral — decorative parallax layer per chapter */
 .chapter-num-layer {
