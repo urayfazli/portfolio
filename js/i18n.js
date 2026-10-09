@@ -291,6 +291,45 @@
     }
   }
 
+  /* ---------- typewriter for [data-typing] elements ---------- */
+  var typingTimers = [];
+  function typewrite(el, text) {
+    // cancel any in-progress typing on this element
+    for (var k = 0; k < typingTimers.length; k++) {
+      if (typingTimers[k].el === el) {
+        clearInterval(typingTimers[k].id);
+        clearTimeout(typingTimers[k].t);
+        typingTimers.splice(k, 1);
+        break;
+      }
+    }
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function render(n) {
+      el.textContent = text.slice(0, n);
+      var cur = document.createElement('span');
+      cur.className = 'typing-cursor';
+      cur.setAttribute('aria-hidden', 'true');
+      el.appendChild(cur);
+    }
+    if (reduceMotion) { render(text.length); return; }
+    var rec = { el: el, id: 0, t: 0 };
+    rec.t = setTimeout(function () {
+      var i = 0;
+      render(0);
+      rec.id = setInterval(function () {
+        i++;
+        render(i);
+        if (i >= text.length) {
+          clearInterval(rec.id);
+          for (var j = 0; j < typingTimers.length; j++) {
+            if (typingTimers[j] === rec) { typingTimers.splice(j, 1); break; }
+          }
+        }
+      }, 55);
+    }, 400);
+    typingTimers.push(rec);
+  }
+
   function applyLang(lang) {
     var dict = translations[lang] || translations[DEFAULT_LANG];
     document.documentElement.setAttribute('lang', lang === 'id' ? 'id' : 'en');
@@ -302,7 +341,9 @@
     els = document.querySelectorAll('[data-i18n]');
     for (i = 0; i < els.length; i++) {
       key = els[i].getAttribute('data-i18n');
-      if (dict[key] !== undefined) els[i].textContent = dict[key];
+      if (dict[key] === undefined) continue;
+      if (els[i].hasAttribute('data-typing')) typewrite(els[i], dict[key]);
+      else els[i].textContent = dict[key];
     }
     els = document.querySelectorAll('[data-i18n-html]');
     for (i = 0; i < els.length; i++) {

@@ -237,6 +237,17 @@ img { max-width: 100%; }
 @media (prefers-reduced-motion: reduce) {
   .profile-wrap { animation: none; }
 }
+
+/* typewriter cursor for the hero statement */
+.typing-cursor {
+  display: inline-block;
+  width: .09em; height: 1em;
+  background: #FCD535;
+  margin-left: .08em;
+  vertical-align: -0.12em;
+  animation: cursorBlink 1s steps(2, start) infinite;
+}
+@keyframes cursorBlink { to { visibility: hidden; } }
 .profile-fallback {
   position: absolute; inset: 0; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
