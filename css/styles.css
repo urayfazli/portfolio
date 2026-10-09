@@ -330,13 +330,16 @@ img { max-width: 100%; }
 .card-placeholder:hover { border-color: var(--hairline); }
 
 /* footer */
-.footer { background: #fafafa; color: #181a20; padding: 48px 0; }
+.footer { background: #0b0e11; color: #eaecef; padding: 48px 0; border-top: 1px solid #2b3139; }
 .footer-inner {
   display: flex; flex-direction: column; gap: 12px; align-items: flex-start;
 }
 .footer-brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; font-size: 14px; }
 .footer-note { color: #707a8a; font-size: 13px; }
-.footer .text-link { color: #b8890a; }
+.footer .text-link { color: #fcd535; }
+
+/* anchored sections: keep clear of the fixed navbar */
+section[id], header[id] { scroll-margin-top: 84px; }
 
 /* ---------- scroll reveal ---------- */
 .reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
