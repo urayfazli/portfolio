@@ -11,7 +11,6 @@
   <title>Uray Fazli — 0xray | Web3 Portfolio</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="stylesheet" href="css/styles.css" />
-  <link rel="stylesheet" href="css/coin.css" />
   <script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js"}}</script>
 </head>
 <body>
@@ -24,15 +23,7 @@
         <span class="brand-mark" aria-hidden="true">0x</span>
         <span class="brand-name">0xray</span>
       </a>
-      <div class="nav-actions">
-        <div class="lang-toggle" role="group" data-i18n-aria="lang.toggle.aria" aria-label="Switch language">
-          <button type="button" class="lang-opt is-active" data-lang="en" aria-pressed="true">EN</button>
-          <button type="button" class="lang-opt" data-lang="id" aria-pressed="false">ID</button>
-        </div>
-        <button class="nav-toggle" id="navToggle" data-i18n-aria="nav.toggle.open" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
+      <div class="nav-right">
       <div class="nav-links" id="navLinks">
         <a class="nav-link" href="#about" data-i18n="nav.about">About</a>
         <a class="nav-link" href="#nodes" data-i18n="nav.nodes">Nodes</a>
@@ -42,6 +33,16 @@
         <a class="nav-link" href="#projects" data-i18n="nav.projects">Projects</a>
         <a class="nav-link" href="#contact" data-i18n="nav.contact">Contact</a>
         <a class="btn btn-primary btn-sm nav-cta" href="https://github.com/urayfazli" target="_blank" rel="noopener">GitHub</a>
+      </div>
+      <div class="nav-actions">
+        <div class="lang-toggle" role="group" data-i18n-aria="lang.toggle.aria" aria-label="Switch language">
+          <button type="button" class="lang-opt is-active" data-lang="en" aria-pressed="true">EN</button>
+          <button type="button" class="lang-opt" data-lang="id" aria-pressed="false">ID</button>
+        </div>
+        <button class="nav-toggle" id="navToggle" data-i18n-aria="nav.toggle.open" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
       </div>
     </div>
   </nav>
@@ -89,43 +90,6 @@
           <span class="chip" data-i18n="chip.testnet">Testnets</span>
           <span class="chip" data-i18n="chip.nft">NFTs</span>
           <span class="chip" data-i18n="chip.memecoins">Meme Coins</span>
-        </div>
-        <!-- ============ 3D BTC COIN (decorative) ============ -->
-        <div class="coin-stage" aria-hidden="true">
-          <div class="coin-glow"></div>
-          <div class="coin-bob">
-            <div class="coin-scene">
-              <div class="coin">
-                <div class="coin-face coin-front"><span>₿</span></div>
-                <i class="es" style="--a:0deg"></i>
-                <i class="es" style="--a:15deg"></i>
-                <i class="es" style="--a:30deg"></i>
-                <i class="es" style="--a:45deg"></i>
-                <i class="es" style="--a:60deg"></i>
-                <i class="es" style="--a:75deg"></i>
-                <i class="es" style="--a:90deg"></i>
-                <i class="es" style="--a:105deg"></i>
-                <i class="es" style="--a:120deg"></i>
-                <i class="es" style="--a:135deg"></i>
-                <i class="es" style="--a:150deg"></i>
-                <i class="es" style="--a:165deg"></i>
-                <i class="es" style="--a:180deg"></i>
-                <i class="es" style="--a:195deg"></i>
-                <i class="es" style="--a:210deg"></i>
-                <i class="es" style="--a:225deg"></i>
-                <i class="es" style="--a:240deg"></i>
-                <i class="es" style="--a:255deg"></i>
-                <i class="es" style="--a:270deg"></i>
-                <i class="es" style="--a:285deg"></i>
-                <i class="es" style="--a:300deg"></i>
-                <i class="es" style="--a:315deg"></i>
-                <i class="es" style="--a:330deg"></i>
-                <i class="es" style="--a:345deg"></i>
-                <div class="coin-face coin-back"><span>₿</span></div>
-              </div>
-            </div>
-          </div>
-          <div class="coin-shadow"></div>
         </div>
       </div>
       <a class="scroll-hint" href="#about" data-i18n-aria="a11y.scrollhint" aria-label="Scroll to about section">

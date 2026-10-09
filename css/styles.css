@@ -158,6 +158,8 @@ img { max-width: 100%; }
 .nav-link:hover, .nav-link.active { color: var(--on-dark); background: var(--card); }
 .nav-cta { margin-left: 12px; }
 .nav-actions { display: flex; align-items: center; gap: 10px; }
+/* right cluster: links + actions sit together on the right */
+.nav-right { display: flex; align-items: center; gap: 20px; margin-left: auto; }
 
 /* language toggle pill (EN | ID) — shadcn-style, always visible */
 .lang-toggle {
