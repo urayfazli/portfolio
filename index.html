@@ -49,6 +49,11 @@
     <!-- ============ HERO ============ -->
     <header class="hero" id="home">
       <div class="hero-3d" id="hero3d" aria-hidden="true"></div>
+      <!-- scroll-driven video background (parallax-bg.mp4); hidden if file missing -->
+      <div class="hero-video-wrap" aria-hidden="true">
+        <video id="bgvideo" class="hero-video" muted playsinline preload="auto" src="parallax-bg.mp4"></video>
+        <div class="hero-video-dim"></div>
+      </div>
       <div class="parallax-layer" data-speed="0.28" aria-hidden="true">
         <div class="hero-grid"></div>
       </div>
@@ -440,6 +445,7 @@
 
   <script src="js/i18n.js"></script>
   <script src="js/app.js" defer></script>
+  <script src="js/videoscrub.js" defer></script>
   <script type="module" src="js/hero3d.js"></script>
 </body>
 </html>
