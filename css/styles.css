@@ -88,9 +88,6 @@ img { max-width: 100%; }
   border-radius: var(--radius-xl);
   padding: 24px;
   transition: border-color .2s ease, transform .2s ease;
-  /* blend into background: top & bottom edges fade out softly */
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 5%, #000 95%, transparent 100%);
-  mask-image: linear-gradient(to bottom, transparent 0%, #000 5%, #000 95%, transparent 100%);
 }
 .card:hover { border-color: var(--muted); }
 .card-title { font-size: 20px; font-weight: 600; line-height: 1.35; margin-bottom: 8px; }
