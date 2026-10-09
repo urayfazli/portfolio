@@ -93,7 +93,7 @@ img { max-width: 100%; }
 .btn-sm { min-height: 36px; padding: 8px 20px; }
 
 .card {
-  background: var(--card);
+  background: transparent;
   border: 1px solid var(--hairline);
   border-radius: var(--radius-xl);
   padding: 24px;
