@@ -56,16 +56,22 @@
   /* ---------- mobile nav ---------- */
   var toggle = document.getElementById('navToggle');
   var links = document.getElementById('navLinks');
+  function navAriaLabel(open) {
+    var lang = document.documentElement.getAttribute('lang') === 'id' ? 'id' : 'en';
+    var d = (window.I18N && window.I18N[lang]) || {};
+    return open ? (d['nav.toggle.close'] || 'Close menu') : (d['nav.toggle.open'] || 'Open menu');
+  }
   if (toggle && links) {
     toggle.addEventListener('click', function () {
       var open = links.classList.toggle('open');
       toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-      toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      toggle.setAttribute('aria-label', navAriaLabel(open));
     });
     links.addEventListener('click', function (e) {
       if (e.target.closest('a')) {
         links.classList.remove('open');
         toggle.setAttribute('aria-expanded', 'false');
+        toggle.setAttribute('aria-label', navAriaLabel(false));
       }
     });
   }
