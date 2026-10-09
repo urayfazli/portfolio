@@ -385,7 +385,7 @@ img { max-width: 100%; }
 .card-placeholder:hover { border-color: var(--hairline); }
 
 /* footer */
-.footer { background: #0b0e11; color: #eaecef; padding: 48px 0; border-top: 1px solid #2b3139; position: relative; z-index: 1; }
+.footer { background: #14181d; color: #eaecef; padding: 48px 0; border-top: 1px solid #2b3139; position: relative; z-index: 1; }
 .footer-inner {
   display: flex; flex-direction: column; gap: 12px; align-items: flex-start;
 }
