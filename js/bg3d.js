@@ -274,7 +274,10 @@ import * as THREE from 'three';
   /* ---------- progress indicator ---------- */
   var lastLabel = '';
   function updateIndicator(t) {
-    var idx = Math.max(0, Math.min(SCENES.length - 1, Math.floor(t)));
+    // label follows the RAW scroll target (no smoothing lag);
+    // the fill bar follows the smoothed journey
+    var rawT = journeyTarget();
+    var idx = Math.max(0, Math.min(SCENES.length - 1, Math.floor(rawT)));
     var frac = t - Math.floor(t);
     if (SCENES[idx].label !== lastLabel && labelEl) {
       labelEl.textContent = SCENES[idx].label;
