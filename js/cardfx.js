@@ -1,6 +1,6 @@
 /* ============================================================
    0xray portfolio — scroll-layer card FX (fungolabs-style)
-   Cards inside .cards-3 / .cards-2 grids animate like layered
+   Cards inside .cards-3 / .cards-2 / .stack-grid grids animate like layered
    sheets driven by scroll position (scrub): translateY + scale
    + rotateX with per-card stagger. Fully reversible — works
    scrolling up AND down. Only --fxp is written per frame;
@@ -12,7 +12,7 @@
 
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  var grids = document.querySelectorAll('.cards-3, .cards-2');
+  var grids = document.querySelectorAll('.cards-3, .cards-2, .stack-grid');
   var items = [];
 
   Array.prototype.forEach.call(grids, function (grid) {
