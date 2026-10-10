@@ -605,3 +605,20 @@ section[id], header[id] { scroll-margin-top: 84px; }
   .sub-chapter { margin-top: 48px; }
   .hero-manifesto { font-size: 17px; }
 }
+
+/* ---------- scroll-layer card FX (fungolabs-style) ---------- */
+.fx-cards{perspective:1400px}
+.fx-card{
+  --fxp:0;
+  transform:translate3d(0,calc((1 - var(--fxp))*64px),0)
+             scale(calc(.93 + .07*var(--fxp)))
+             rotateX(calc((1 - var(--fxp))*10deg));
+  opacity:calc(.02 + .98*var(--fxp));
+  transition:border-color .2s ease;
+  will-change:transform,opacity;
+}
+a.card-link.fx-card:hover{
+  transform:translate3d(0,calc((1 - var(--fxp))*64px - 2px),0)
+             scale(calc(.93 + .07*var(--fxp)))
+             rotateX(calc((1 - var(--fxp))*10deg));
+}
