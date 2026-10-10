@@ -622,3 +622,8 @@ a.card-link.fx-card:hover{
              scale(calc(.93 + .07*var(--fxp)))
              rotateX(calc((1 - var(--fxp))*10deg));
 }
+
+/* ---------- scroll text FX (fungolabs-style) ---------- */
+.tx-w{display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:.1em;margin-bottom:-.1em}
+.tx-wi{display:inline-block;transform:translateY(110%);will-change:transform}
+.tx-s{display:inline-block;opacity:.14;will-change:opacity}
